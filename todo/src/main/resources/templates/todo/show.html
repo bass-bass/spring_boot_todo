@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Show</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card my-4 w-100" th:object="${todoModel}">
+    <div class="card-header">ToDo</div>
+    <div class="card-body">
+      <h5 class=card-title th:text="${todo.title}"></h5>
+      <p class="card-text" th:text="${todo.content}"></p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <p class="my-auto" th:text="${#dates.format(todo.updatedDate,'yyyy/MM/dd HH:mm')}"></p>
+        <form method="get" th:action="@{/edit/{id}(id=${todo.id})}" th:object="${formModel}">
+          <button type="submit" class="btn btn-outline-primary">Edit</button>
+        </form>
+        <form method="post" th:action="@{/delete}" th:object="${formModel}">
+          <input type="hidden" name="id" th:value="${todo.id}">
+          <button type="submit" class="btn btn-secondary">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <th:block th:each="comment : ${todo.comments}">
+    <div class="card my-3 w-50" th:data-id="${comment.id}">
+      <div class="card-body">
+        <p th:text="${comment.comment}"></p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <p class="my-auto" th:text="${#dates.format(comment.updatedDate,'yyyy/MM/dd HH:mm')}"></p>
+          <button type="button" class="btn btn-outline-primary edit-comment" th:data-comment="${comment.comment}" th:data-id="${comment.id}" th:data-todo="${todo.id}" data-bs-toggle="modal" data-bs-target="#commentEditModal">Edit</button>
+          <button type="button" class="btn btn-secondary delete-comment" th:data-id="${comment.id}">Delete</button>
+        </div>
+      </div>
+    </div>
+  </th:block>
+  <form class="w-50" method="post" th:action="@{/show/{id}(id=${todo.id})}" th:object="${commentModel}">
+    <input class="form-control w-50" type="text" name="comment" required>
+    <input type="hidden" name="todoId" th:value="${todo.id}">
+    <button type="submit" class="btn btn-secondary">Comment</button>
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+  </form>
+  <!-- Comment-Modal -->
+  <th:block th:include="layouts/comment-modal::modal"></th:block>
+</div>
+</body>
+</html>

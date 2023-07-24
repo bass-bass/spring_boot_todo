@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS todos;
+CREATE TABLE todos (
+  id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(100) NOT NULL,
+  content TEXT NOT NULL,
+  account_id INT(11) NOT NULL,
+  created_date DATETIME NOT NULL,
+  updated_date DATETIME NOT NULL
+);

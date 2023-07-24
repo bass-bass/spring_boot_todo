@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:if="${error}" th:text="${error}" class="alert alert-danger text-center"></div>
+    <h1 class="text-center" th:text="${header}"></h1>
+    <div class="todo" th:each="todo : ${todos}">
+        <div class="card my-4 w-100">
+            <div class="card-header">ToDo</div>
+            <div class="card-body">
+                <h5 class=card-title th:text="${todo.title}"></h5>
+                <p class="card-text" th:text="${todo.content}"></p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <p class="my-auto" th:text="${#dates.format(todo.updatedDate,'yyyy/MM/dd HH:mm')}"></p>
+                    <form method="get" th:action="@{/show/{id}(id=${todo.id})}" th:object="${formModel}">
+                        <button type="submit" class="btn btn-outline-primary">More</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:if="${page.totalPages}">
+        <th:block th:if="${keyword}" th:include="layouts/pagination-search::pagination"></th:block>
+        <th:block th:unless="${keyword}" th:include="layouts/pagination::pagination"></th:block>
+    </th:block>
+</div>
+</body>
+</html>

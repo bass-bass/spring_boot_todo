@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    # Dockerコンテナから起動する場合
+    url: jdbc:mysql://db:3306/todo?connectionTimeZone=SERVER
+    # IDEで起動する場合
+    # url: jdbc:mysql://localhost:3306/todo?connectionTimeZone=SERVER
+    username: root
+    password: 3ikN33Himtmu
+    driverClassName: com.mysql.cj.jdbc.Driver
+    testOnBorrow: true
+    validationQuery: SELECT 1
+
+  jpa:
+    database: MYSQL
+    hibernate:
+      use-new-id-generator-mappings: false

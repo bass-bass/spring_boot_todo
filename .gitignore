@@ -1,0 +1,37 @@
+### OS
+## Mac OS
+.DS_Store
+
+## Windows
+Thumbs.db
+
+### Editor
+## IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+## Eclipse, STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+/bin/
+
+## vscode
+.vscode/
+settings.json
+
+## vi
+*.swp
+
+## emacs
+*~
+
+### build
+## Maven
+target/

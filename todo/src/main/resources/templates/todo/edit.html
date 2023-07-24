@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="text-center">Edit ToDo</h1>
+    <form method="post" th:action="@{/edit/done}" th:object="${formModel}">
+        <input type="hidden" name="id" th:value="*{id}">
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" th:value="*{title}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea type="text" name="content" class="form-control" rows="3" th:field="*{content}"></textarea>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

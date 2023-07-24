@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  db:
+    build: ./docker/mysql
+    image: mysql:8.0.23
+    container_name: todo_db
+    platform: linux/x86_64
+    environment:
+      MYSQL_DATABASE: todo
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 3ikN33Himtmu
+      MYSQL_ROOT_PASSWORD: 3ikN33Himtmu
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+  app:
+    build: ./docker/spring
+    image: openjdk:11
+    container_name: todo_app
+    working_dir: /app
+    volumes:
+      - ./todo:/app
+    ports:
+      - "8000:8080"
+    tty: true
+    depends_on:
+      - db
